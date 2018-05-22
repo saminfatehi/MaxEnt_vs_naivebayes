@@ -8,9 +8,9 @@ textfile2 = open("g.txt",'r',encoding='utf-8')
 text2 = textfile2.readlines()
 
 i = 0
-file = open("datafile.txt","w")
+file = open("file.txt","w")
 file.close()
-file = open("datafile.txt","a")
+file = open("file.txt","a")
 
 tagger = POSTagger(model='resources/postagger.model')
 
@@ -19,8 +19,9 @@ for j,k in zip(text1,text2):
     tag = tagger.tag(word_tokenize(j))
     first_tag = tag[0][1]
     last_tag = tag[-1][1]
-    print(last_tag)
+    l = len(word_tokenize(j))
     i+=1
+
     if 'عشق' in word_tokenize(j):
         esgh = 1
     else:
@@ -38,12 +39,14 @@ for j,k in zip(text1,text2):
     else:
         to = 0
 
-    features = str(i)+' '+ "nimaei" + ' ' + "f1" + ' ' + word_tokenize(j)[0]+ ' ' + "f2" + ' '+ str(esgh)+ ' ' + "f3" + ' '+ str(jan)+ ' ' + "f4" + ' '+ str(man)+ ' ' + "f5" + ' '+ str(to)
+    features = str(i)+' '+ "nimaei" + ' ' + "f1" +  '='+ word_tokenize(j)[-1]+ ' ' + "f2" +  '='+ str(esgh)+\
+               ' ' + "f3" +  '='+ str(jan)+ ' ' + "f4" +  '='+ str(man)+ ' ' + "f5" +  '='+ str(to) +' '+\
+               'f6= ' + first_tag + "f7="+' '+ last_tag +' '+ 'f8' + '='+ str(l)
 
     file.write(features)
     file.write('\n')
-
-
+    l = len(word_tokenize(k))
+    print(l)
     tag = tagger.tag(word_tokenize(k))
     first_tag = tag[0][1]
     last_tag = tag[-1][1]
@@ -65,7 +68,9 @@ for j,k in zip(text1,text2):
     else:
         to = 0
 
-    features = str(i)+' '+ "ghazal" + ' ' + "f1" + ' ' + word_tokenize(k)[0]+ ' ' + "f2" + ' '+ str(esgh)+ ' ' + "f3" + ' '+ str(jan)+ ' ' + "f4" + ' '+ str(man)+ ' ' + "f5" + ' '+ str(to)
+    features = str(i)+' '+ "ghazal" + ' ' + "f1" + '=' + word_tokenize(k)[-1]+ ' ' + "f2" +  '='+ str(esgh)+\
+               ' ' + "f3" + '='+ str(jan)+ ' ' + "f4" +  '='+ str(man)+ ' ' + "f5" +  '='+ str(to)+ ' ' +\
+               "f6="+ first_tag +' '+ "f7="+last_tag+' ' +'f8' + '='+ str(l)
 
     file.write(features)
     file.write('\n')
